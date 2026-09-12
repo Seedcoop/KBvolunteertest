@@ -1,0 +1,6 @@
+project_id = "kbvolunteertest"
+
+[functions.volunteer-profile]
+enabled = true
+verify_jwt = false
+entrypoint = "./functions/volunteer-profile/index.ts"
