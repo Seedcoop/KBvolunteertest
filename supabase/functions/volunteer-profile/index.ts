@@ -5,8 +5,16 @@ const LOCAL_ORIGIN = /^http:\/\/(localhost|127\.0\.0\.1)(:\d{1,5})?$/;
 const EVENT_SLUG = "national-youth-volunteer-2026";
 const TOKEN_AUDIENCE = "kb-volunteer-profile";
 const TOKEN_VERSION = 1;
-const INSTRUMENT_VERSION = "kb-vfi-education-2026-v1";
-const NOTICE_VERSION = "2026-09-12-v1";
+const VERSION_CONFIG = {
+  "kb-vfi-education-2026-v1": {
+    noticeVersion: "2026-09-12-v1",
+    unsureAsZero: false,
+  },
+  "kb-vfi-education-2026-v2": {
+    noticeVersion: "2026-09-12-v2",
+    unsureAsZero: true,
+  },
+} as const;
 const MAX_BODY_BYTES = 64 * 1024;
 const encoder = new TextEncoder();
 
@@ -238,11 +246,32 @@ function normalizeText(
   return normalized;
 }
 
-function requireVersion(value: unknown, expected: string, field: string): string {
-  if (value !== expected) {
-    throw new HttpError(400, "INVALID_VERSION", `${field}을(를) 확인해 주세요.`);
+function validateVersionPair(
+  instrumentValue: unknown,
+  noticeValue: unknown,
+): {
+  instrumentVersion: keyof typeof VERSION_CONFIG;
+  noticeVersion: string;
+  unsureAsZero: boolean;
+} {
+  if (
+    typeof instrumentValue !== "string" ||
+    !Object.prototype.hasOwnProperty.call(VERSION_CONFIG, instrumentValue)
+  ) {
+    throw new HttpError(400, "INVALID_VERSION", "검사 버전을 확인해 주세요.");
   }
-  return expected;
+
+  const instrumentVersion = instrumentValue as keyof typeof VERSION_CONFIG;
+  const config = VERSION_CONFIG[instrumentVersion];
+  if (noticeValue !== config.noticeVersion) {
+    throw new HttpError(400, "INVALID_VERSION", "수집 안내 버전을 확인해 주세요.");
+  }
+
+  return {
+    instrumentVersion,
+    noticeVersion: config.noticeVersion,
+    unsureAsZero: config.unsureAsZero,
+  };
 }
 
 function validateSubmissionId(value: unknown): string {
@@ -269,7 +298,7 @@ function validateAnswers(value: unknown): Answer[] {
   return value as Answer[];
 }
 
-function calculateResults(answers: Answer[]): {
+function calculateResults(answers: Answer[], unsureAsZero: boolean): {
   scores: Scores;
   ranks: Ranks;
   unknownCount: number;
@@ -281,12 +310,15 @@ function calculateResults(answers: Answer[]): {
     const values = FACTOR_QUESTIONS[key].map((questionNumber) =>
       answers[questionNumber - 1]
     );
-    if (values.some((answer) => answer === "unsure")) {
+    if (!unsureAsZero && values.some((answer) => answer === "unsure")) {
       sums[key] = null;
       scores[key] = null;
       continue;
     }
-    const sum = (values as number[]).reduce((total, answer) => total + answer, 0);
+    const sum = values.reduce<number>(
+      (total, answer) => total + (answer === "unsure" ? 0 : answer),
+      0,
+    );
     sums[key] = sum;
     scores[key] = sum / 5;
   }
@@ -433,17 +465,11 @@ Deno.serve(async (request: Request) => {
     const affiliation = normalizeText(participant.affiliation, "학교 또는 소속", 80);
     const submissionId = validateSubmissionId(body.submissionId);
     const answers = validateAnswers(body.answers);
-    const instrumentVersion = requireVersion(
+    const versions = validateVersionPair(
       body.instrumentVersion,
-      INSTRUMENT_VERSION,
-      "검사 버전",
-    );
-    const noticeVersion = requireVersion(
       body.noticeVersion,
-      NOTICE_VERSION,
-      "수집 안내 버전",
     );
-    const results = calculateResults(answers);
+    const results = calculateResults(answers, versions.unsureAsZero);
 
     const { data, error } = await supabase.rpc("upsert_volunteer_submission", {
       p_submission_id: submissionId,
@@ -454,8 +480,8 @@ Deno.serve(async (request: Request) => {
       p_scores: results.scores,
       p_ranks: results.ranks,
       p_unknown_count: results.unknownCount,
-      p_instrument_version: instrumentVersion,
-      p_notice_version: noticeVersion,
+      p_instrument_version: versions.instrumentVersion,
+      p_notice_version: versions.noticeVersion,
     });
 
     if (error || !Array.isArray(data) || !data[0]) {
