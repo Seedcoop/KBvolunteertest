@@ -239,10 +239,83 @@ alter table public.volunteer_events force row level security;
 alter table public.volunteer_submissions enable row level security;
 alter table public.volunteer_submissions force row level security;
 
+create or replace view public.volunteer_submissions_export
+with (security_invoker = true, security_barrier = true)
+as
+select
+  s.submission_id,
+  s.event_slug,
+  case
+    when s.participant_name ~ '^[[:space:]]*[-+=@]'
+      then chr(39) || s.participant_name
+    else s.participant_name
+  end as participant_name,
+  case
+    when s.affiliation ~ '^[[:space:]]*[-+=@]'
+      then chr(39) || s.affiliation
+    else s.affiliation
+  end as affiliation,
+  s.score_p,
+  s.score_v,
+  s.score_c,
+  s.score_s,
+  s.score_u,
+  s.score_e,
+  s.rank_p,
+  s.rank_v,
+  s.rank_c,
+  s.rank_s,
+  s.rank_u,
+  s.rank_e,
+  array_to_string(s.top_motives, ', ') as top_motives,
+  s.unknown_count,
+  s.answers ->> 0 as q01,
+  s.answers ->> 1 as q02,
+  s.answers ->> 2 as q03,
+  s.answers ->> 3 as q04,
+  s.answers ->> 4 as q05,
+  s.answers ->> 5 as q06,
+  s.answers ->> 6 as q07,
+  s.answers ->> 7 as q08,
+  s.answers ->> 8 as q09,
+  s.answers ->> 9 as q10,
+  s.answers ->> 10 as q11,
+  s.answers ->> 11 as q12,
+  s.answers ->> 12 as q13,
+  s.answers ->> 13 as q14,
+  s.answers ->> 14 as q15,
+  s.answers ->> 15 as q16,
+  s.answers ->> 16 as q17,
+  s.answers ->> 17 as q18,
+  s.answers ->> 18 as q19,
+  s.answers ->> 19 as q20,
+  s.answers ->> 20 as q21,
+  s.answers ->> 21 as q22,
+  s.answers ->> 22 as q23,
+  s.answers ->> 23 as q24,
+  s.answers ->> 24 as q25,
+  s.answers ->> 25 as q26,
+  s.answers ->> 26 as q27,
+  s.answers ->> 27 as q28,
+  s.answers ->> 28 as q29,
+  s.answers ->> 29 as q30,
+  s.instrument_version,
+  s.notice_version,
+  s.revision,
+  s.created_at at time zone 'Asia/Seoul' as created_at_kst,
+  s.updated_at at time zone 'Asia/Seoul' as updated_at_kst
+from public.volunteer_submissions as s;
+
+comment on view public.volunteer_submissions_export is
+  'Dashboard-only Excel/CSV export of saved volunteer profile submissions.';
+
 revoke all on table public.volunteer_events from anon, authenticated;
 revoke all on table public.volunteer_submissions from anon, authenticated;
+revoke all on table public.volunteer_submissions_export
+  from public, anon, authenticated;
 grant all on table public.volunteer_events to service_role;
 grant all on table public.volunteer_submissions to service_role;
+grant select on table public.volunteer_submissions_export to service_role;
 
 revoke all on function public.is_valid_volunteer_answers(jsonb)
   from public, anon, authenticated;

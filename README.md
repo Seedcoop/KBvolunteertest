@@ -14,7 +14,9 @@
 
 Supabase의 `volunteer_submissions` 테이블은 Row Level Security를 강제로 적용하고 `anon`·`authenticated` 역할의 접근을 제거했습니다. 공개 웹앱은 테이블에 직접 접근하지 않으며, `volunteer-profile` Edge Function이 참여 코드를 확인하고 서버에서 점수를 다시 계산한 뒤 저장합니다. 관리자 키와 실제 참여 코드는 저장소에 포함하지 않습니다.
 
-운영자는 Supabase Dashboard의 Table Editor에서 이름·소속, 개별 점수·순위, 전체 응답 JSON을 확인하고 CSV로 내보낼 수 있습니다.
+운영자는 Supabase Dashboard의 Table Editor에서 원본 `volunteer_submissions`를 확인할 수 있습니다. Excel용 `volunteer_submissions_export` 뷰에는 이름·소속, 개별 점수·순위와 문항 응답 `q01`~`q30`을 각각의 열로 펼쳐 두었습니다. 이 뷰를 CSV로 내보내면 Excel에서 바로 분석할 수 있습니다.
+
+점수 열의 뜻은 `score_p` 보호, `score_v` 가치, `score_c` 진로, `score_s` 사회, `score_u` 이해, `score_e` 성장입니다. 순위 열도 같은 알파벳을 사용합니다. 문항 응답은 `1`~`5` 또는 `unsure`로 저장됩니다.
 
 ## 결과 해석
 
