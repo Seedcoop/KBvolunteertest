@@ -31,8 +31,31 @@
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media print{@page{size:A4;margin:17mm}body{background:white;color:#222}.sidebar,.workspace,.dialog,.toast,.skip{display:none!important}.print-content{display:block;font-family:'Paperlogy','Malgun Gothic',sans-serif}.print-content h1{font-size:24px;margin:10px 0 18px}.print-content h2{font-size:15px;margin:20px 0 7px}.print-content p{white-space:pre-wrap;font-size:11px;line-height:1.8}.print-content section{break-inside:avoid}.print-content .print-label{font-size:10px;color:#777}.print-content .print-sentence{background:#fff3ca;padding:15px;border:1px solid #d5bd76;white-space:pre-wrap}.print-content footer{font-size:9px;border-top:1px solid #ddd;margin-top:25px;padding-top:10px}}
 </style>
+<style>
+.entry-gate{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:44px 24px;background:var(--paper)}.entry-card{width:100%;max-width:480px;background:#fffefb;border:1px solid var(--line);border-radius:24px;padding:40px;box-shadow:0 14px 50px #493c0b06}.entry-brand{width:215px;height:42px;object-fit:contain;object-position:left center}.entry-course{font-size:11px;color:var(--muted);margin-top:12px;padding-bottom:28px;border-bottom:1px solid var(--line)}.entry-kicker{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--yellow-ink);margin-top:30px}.entry-card h1{font-size:34px;font-weight:800;line-height:1.35;margin:10px 0 14px}.entry-description{font-size:13px;color:var(--muted);line-height:1.8}.entry-form{margin-top:28px}.entry-form label{display:block;font-size:13px;font-weight:700;margin-bottom:9px}.entry-code{display:block;width:100%;height:64px;border:1px solid #d8d3c6;border-radius:12px;background:white;color:var(--ink);font:700 27px 'Paperlogy','Malgun Gothic',sans-serif;letter-spacing:.16em;text-align:center;padding:12px 16px;transition:border-color .15s}.entry-code::placeholder{font-size:16px;font-weight:400;letter-spacing:0;color:#96988c}.entry-code:focus{border-color:#ad8000;outline:3px solid #ffbc002e;outline-offset:2px}.entry-code[aria-invalid=true]{border-color:#a23d28}.entry-help{font-size:11px;color:var(--muted);margin-top:9px}.entry-error{min-height:38px;padding-top:9px;color:#a23d28;font-size:12px;line-height:1.6}.entry-submit{width:100%;min-height:50px;font-size:14px;border-radius:12px;margin-top:8px}.entry-footer{margin-top:23px;font-size:11px;color:#7b7f71;text-align:center}.entry-noscript{margin-top:14px;font-size:12px;color:#a23d28}@media(max-width:540px){.entry-gate{padding:22px 18px}.entry-card{padding:30px 24px;border-radius:20px}.entry-card h1{font-size:30px}.entry-course{padding-bottom:24px}.entry-kicker{margin-top:24px}.entry-form{margin-top:24px}.entry-brand{width:200px}}
+@media print{.entry-gate{min-height:0;display:block;padding:0}.entry-card{box-shadow:none;border:0}.entry-form,.entry-footer{display:none}}
+</style>
 </head>
 <body>
+<section class="entry-gate" id="entry-gate" aria-labelledby="entry-title">
+ <div class="entry-card">
+  <img class="entry-brand" src="data:image/webp;base64,UklGRgIJAABXRUJQVlA4TPUIAAAvAUMiEKAgSW4cSfL/P3taBAHwKPXsUREIaVtNDhkkkEAEEWQwg2+QQgxDyGEKMaQwWZBkx23TjG9bhRsgAZD5Rv8AHF//ff339d/Xf1///dOA+Y8DjqCfUWSvBuWgtPfIHqOlwO9avka+OcwvZJ0cgmRpGExHaX9+uGxd7q4ABxQLFiYJWxTLZ2D1irjq68hHsjX4OiwsS4rX4bg/4EFItJ8+NL2S3vLxcYDfcBj6flA7kE35KbbCpTaPXFMCX0cl4SGhVqpvwHdPJguJcRXYG7uVtvwULRnv4Q4YbBxURTowv+tge9P3pXegCzlc5d+RGn8J9+Unbwkga8BMolH/3KCh7mxE18P4iTljUlCUYl3gj0QhTJogMHgLIpft+K8cGp1WpPBsJVU7EOlB2030HL9C2AaVKYdlq4vFa/RUIfWG9F7wekV00Ohnpc9VxHLYjHVY/gSQOiaoM/eQqyEvznVeKDcFR1ATMuupkiWuBwQVfh4Ss3GWDFPqbw0qFKM7S07BpWWLr6+Xs8Nb6uSGb2deCK5h03VKe0xff1jEBgOyvHTC29XE2OOlAuxui42NTHos9zuHvWCusiAfoNXcYe47mS7bkuPAcakTZuLwODtvtRJknWnW8WoUteuQT02NQ37cyd2EfSLJkR3rAKm4lMslDua9yc0QNe3UWEEpqgkkGUU7ufwtPjIRLkTt/0IvRoafZyMLmwJ/5N4LlqmBHVlLF4bKkJkCoseajmTPkJiCa7XJn7Ho61Rw1J6IDWvXrWAvd25j6VLmGceuKFrxaWETVKIe0/6KLwZPzrw8DGm/J9ePGHwFybfsv4VwPqTpKPIPS4+dLuoyqa4W9c7ETQ4o1amdOZO4u7kX2o83baMStb1v/bK3EJ8tNGuIosVRQSpjHwAEC1F7uWOG7M3fER2b8eFl1BHzEGPZbUOCnlEy/NgaGHQQYh05+0kmig77CQYPzvtVBzM2KOnZvXvi0bKFTsQLLlrd1ljhnCC9xQHY2Le3kal50nG+ch0K4Gqr8h8hCuA4FMd1eAiQvD5iBw7qQ4Ubrva5ETYovblhOqn9yeCib9U0eyAXRtyufJh5BKKCyOv42PjmXfKFClNwjXvTNqfXYpU3D8eTLy7eSm3aQ3UZK1lysL8ZPNSd3Aka1AUDNboeZqDhXCpYiLqEFWixbf/MyU86MTtey5nOP9KqILSYMQ4gtTZ+XjHjSJNkDKAE/AXH7GJ37gxNl+EgRKoZi/s5xgCemXgubIKPKxjS1nceNw+hUg3q5FIDzexG3WhfQvbjmLvFFzoYFOPNBqUGpUvhOFt0Uwqx5J1xuhw3F22SkypYpybc1RihItNT0fLkpBuuqX5x0ru0SoOiml5IF6ljV2PECzHyqve96bHZeqQFpQ3GWpZLYPEMWZVcis3Gq7ik51fQNlq+nZaLK+mhqp32seuRJovxCoq/3GLlmtS9IJVrYaj5MyYqI7ZT+nti3MXRAkovtI+WP8vIhG5MzR7kWsI/zpunB2aOa6N/HRbuS9hG+M8jmVsk4TokMjytJQCr88YUDGb+Knpm4vbRMg8xlxwMDu220wKJAk8JfLB4JqIqfWstSxss3Ju2HaRkU65kYkkfTY3WGgA4Y1E3XabGfj0qd7JgyWqM/qN3Ljohk+ty7FstaYGomp7JWa0ViGcGH2wyG12XnI7WDRbuT95Fa67sc7/S3CmPHBu4pSvyNtC5HqlGRA0KH0vN5e9XKoMVSTWFy4usbt09Kvax7NiAGsdMs2CoOoR1elX2BvZYkxqMJFmYmuriZqtS+0z6LNWDCun56+9TtGsmgKuHUwrJcR/qKP0ogOa5dzJVfVTU2Uz/4bQwpW2Ci9EOlu5LSLzBJODy1ubdiOyFZguzITnbxJgDUg/Z232vujMQZaflW/QUVzDTRHJwpkinrtKPwSSxfNQSj4nohDlo7Q8NgxPeXX/p3rT5m5qGQ1xaov3nveR4uaJvPLT+fqU7fpabW2mIHthUc+1M+yYbvyUmv3mo1L0NKQE/fWIjLLx5oqjgGxvsTxaJlpGPpfjukBNMyLUSkyA5HZrvWX0Cnp5fkNXXSQ/ZNa7czzUzHeVkFQp9J+dPalZ2N6+/RwWkpq3EmMZ3h9xgaV4nNkE7tD634AiiMi2ES2+FaTlLM2fQKl26LN4W8fLJ4rQV0iKVbKFhPEO6tukm5XWQbtD57Joj8NrqmMpQJfeWaLWEX6gbwj6TcCUqTQEtJYvaArXJIYoakr0oDAxcRC7PnEZ8hpjSwiUNgui+1ugM2AYVBtjzjFhEpyMiT0cTxfxR/CiXQQzcab8m8qM3By0zWQYAuXahdMgdIJZ9DJp8tDtXlhyM0P5ficZQ82/ax/QtHzqny1DjZyx3fyCb/pZIbslwbG7qxNB0nZcu6kcZAxgu5ZXo6JzbYXh4+G4UWrYDJLKbWIQl6M7Sz27qfiHTEd1tzMrX6u0C6SGJqH4YSrFH0rs+w1x0S3MaeaycmmUiCNEkzizYTV5OgaYO0FHJBMWo10WeY5x+fl9SIfTqonILCtJx1MX1OzSfB5OZvAPp/IVENX4oW3tcXerG1U2rMcbTDX5F+a9F4byk9rUqpCk7Gx7rVyFZ5FuRe3hBBxJ16Xemx74iHyJaSgA+yEw8OEdwHT5IV6BS3Xorkg+wychPHIi7az8PhPoVadidcYFVIilKcR9ayRcE6cIaaRksx8dMKBsW6kvzFpGnslprCYLhaiShgf9WVB9kCeXWEJ9l4XH6F5uV95f6Ltf6iSaGoks66FdO8U6/nVqb10JjdEsHvdApdv0zg8/h3g1yg3FVnREIXdNBM3Gn2GMeYsHF3000nS0eb3r/OgbaZC8Gtn72QVdjHGO7uWhyEOcWlmQ1A9Ba2zFp9GOvSL+PuCLvGPutRzLnoF1ueWzt4quyz7HfmlQ4B9LvybV35pxjw30JqmhBeakg5j259O7MfR2xN024dnfh0v0OL+a43Q79E4/u/cm/w+Nyd2k58mi9R8Wv8T+Ue7M7dZ16NN6n6B+A4+u/r/++/vv67+u/r/++/vv67+u//6RCAA==" alt="KB라이프사회공헌재단">
+  <p class="entry-course">제28회 전국청소년자원봉사대회</p>
+  <p class="entry-kicker">AI · 바이브코딩 워크숍</p>
+  <h1 id="entry-title">우리의 봉사를,<br>한 페이지에 담습니다.</h1>
+  <p class="entry-description">진행자가 안내한 참여 코드를 입력하면<br>프로젝트 소개 만들기를 시작할 수 있습니다.</p>
+  <form class="entry-form" id="entry-form" novalidate>
+   <label for="entry-code">참여 코드</label>
+   <input class="entry-code" id="entry-code" name="participation-code" type="text" maxlength="64" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="go" placeholder="4자리 코드 입력" aria-describedby="entry-help entry-error" required>
+   <p class="entry-help" id="entry-help">영문 대소문자를 구분하지 않습니다.</p>
+   <p class="entry-error" id="entry-error" role="alert" aria-live="polite" aria-atomic="true"></p>
+   <button class="btn primary entry-submit" id="entry-submit" type="submit">워크숍 입장</button>
+  </form>
+  <p class="entry-footer">활동지의 아이디어를 우리 팀의 소개 페이지로.</p>
+  <noscript><p class="entry-noscript">워크숍을 이용하려면 브라우저에서 JavaScript를 허용해야 합니다.</p></noscript>
+ </div>
+</section>
+<div id="workshop-app" hidden inert>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
 <svg style="display:none" aria-hidden="true"><defs>
 <symbol id="i-code" viewBox="0 0 24 24"><path d="m7 7-5 5 5 5m10-10 5 5-5 5M14 4l-4 16"/></symbol>
@@ -84,7 +107,11 @@
 <dialog class="dialog" id="copy-dialog"><div class="dialog-head"><h2>요청문 복사</h2><button class="icon-btn" data-close="copy-dialog" aria-label="닫기"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><p>브라우저가 자동 복사를 제한했습니다. 아래 내용을 선택한 뒤 Ctrl+C로 복사해 주십시오.</p><textarea id="copy-fallback" aria-label="직접 복사할 내용" readonly></textarea></div><div class="dialog-actions"><button class="btn primary" id="select-copy">전체 선택</button></div></dialog>
 <input type="file" id="import-file" accept=".json,application/json" hidden>
 <div class="toast" id="toast" role="status" aria-live="polite"></div><article class="print-content" id="print-content"></article>
+</div>
 <script>
+(() => {
+'use strict';
+function startWorkshop() {
 'use strict';
 const STORAGE_KEY = 'kb28-vibe-workshop-v1';
 const VERSION = 2;
@@ -528,6 +555,54 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 updateCollectionStatus();
 void flushCollection();
 
+}
+// This shared participation code controls workshop entry, not server authorization.
+const entrySessionKey = 'kb28-workshop-entry-v1';
+const entryGate = document.querySelector('#entry-gate');
+const entryApp = document.querySelector('#workshop-app');
+const entryForm = document.querySelector('#entry-form');
+const entryCode = document.querySelector('#entry-code');
+const entryError = document.querySelector('#entry-error');
+let workshopStarted = false;
+
+function enterWorkshop() {
+ if (workshopStarted) return;
+ // Initialize saved work and collection only after the code has been accepted.
+ startWorkshop();
+ workshopStarted = true;
+ entryApp.hidden = false;
+ entryApp.inert = false;
+ entryGate.hidden = true;
+ entryCode.value = '';
+ try { sessionStorage.setItem(entrySessionKey, 'accepted'); } catch {}
+ document.querySelector('#main').focus({preventScroll:true});
+ window.scrollTo({top:0,behavior:'instant'});
+}
+
+entryForm.addEventListener('submit', event => {
+ event.preventDefault();
+ if (!/^kb28$/i.test(entryCode.value)) {
+  entryCode.setAttribute('aria-invalid', 'true');
+  entryError.textContent = entryCode.value.length
+   ? '참여 코드가 일치하지 않습니다. 안내받은 4자리 코드를 확인해 주십시오.'
+   : '진행자가 안내한 참여 코드를 입력해 주십시오.';
+  entryCode.focus();
+  entryCode.select();
+  return;
+ }
+ enterWorkshop();
+});
+entryCode.addEventListener('input', () => {
+ entryCode.removeAttribute('aria-invalid');
+ entryError.textContent = '';
+});
+
+let entryRemembered = false;
+try { entryRemembered = sessionStorage.getItem(entrySessionKey) === 'accepted'; } catch {}
+if (entryRemembered) enterWorkshop();
+else entryCode.focus({preventScroll:true});
+
+})();
 </script>
 </body>
 </html>
