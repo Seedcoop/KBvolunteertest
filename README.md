@@ -25,6 +25,10 @@ Clary et al.(1998)의 Volunteer Functions Inventory(VFI)를 참고한 교육용 
 ## 구성
 
 - `index.html`: GitHub Pages용 단일 웹앱
+- `workshop/index.html`: 프로젝트 기획 워크숍
+- `followup/meeting1.html`: 1차 온라인 미팅 · 기획을 실행 약속으로 정리
+- `followup/meeting2.html`: 2차 온라인 미팅 · 진행 기록을 최종 발표 HTML로 완성
+- `followup/README.md`: 두 미팅의 파일 이동 방식과 결과물
 - `supabase/migrations/202609120001_volunteer_collection.sql`: 비공개 수집 테이블과 원자적 저장 함수
 - `supabase/migrations/202609120002_unsure_zero_scoring.sql`: 0점 결과를 허용하는 점수 제약 변경
 - `supabase/functions/volunteer-profile/index.ts`: 참여 확인, 입력 검증, 서버 채점과 저장
@@ -39,3 +43,8 @@ Clary et al.(1998)의 Volunteer Functions Inventory(VFI)를 참고한 교육용 
 이 저장소의 `main` 브랜치 루트(`/`)를 게시 소스로 사용합니다. `.nojekyll` 파일로 정적 HTML을 그대로 제공합니다.
 
 배포 주소: https://seedcoop.github.io/KBvolunteertest/
+
+후속 미팅:
+
+- 1차: https://seedcoop.github.io/KBvolunteertest/followup/meeting1.html
+- 2차: https://seedcoop.github.io/KBvolunteertest/followup/meeting2.html
